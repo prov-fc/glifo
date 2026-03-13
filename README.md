@@ -15,7 +15,7 @@ Il QR code in questo modo funge da Timbro Digitale. Per più info riguardo il Ti
 
 L'esigenza è nata da un ufficio interno che distribuisce documenti cartacei ottenuti da un documento originario che è nativamente digitale. La necessità è quella di poter verificare l'autenticità e la validità del documento cartaceo ottenendo il suo gemello digitale per verificare che, sia il contenuto che la firma apposta, anch'essa digitale, siano autentici.
 
-_Questo progetto utilizza Pocketbase (v0.22.23) per la gestione di documenti caricati online, e per la creazione di un codice QR che punta alla pagina dove si può scaricare questo documento._
+_Questo progetto utilizza Pocketbase (v0.36.1) per la gestione di documenti caricati online, e per la creazione di un codice QR che punta alla pagina dove si può scaricare questo documento._
 
 _Nota dalla documentazione di Pocketbase: Please keep in mind that PocketBase is still under active development and full backward compatibility is not guaranteed before reaching v1.0.0. PocketBase is NOT recommended for production critical applications yet, unless you are fine with reading the [changelog](https://github.com/pocketbase/pocketbase/blob/master/CHANGELOG.md) and applying some manual migration steps from time to time._
 
@@ -25,13 +25,13 @@ Qui trovi le istruzioni sul come far funzionare questo progetto in locale.
 
 ### Installazione
 
-1. Scaricare Pocketbase (`v0.22.23`) da [https://github.com/pocketbase/pocketbase/releases/tag/v0.22.23](https://github.com/pocketbase/pocketbase/releases/tag/v0.22.23)
+1. Scaricare Pocketbase (`v0.36.1`) da [https://github.com/pocketbase/pocketbase/releases/tag/v0.36.1](https://github.com/pocketbase/pocketbase/releases/tag/v0.36.1)
 2. Clonare questo repository in locale
    ```sh
    git clone https://github.com/prov-fc/repo_name.git
    ```
 3. Spostare `pocketbase.exe` nel repository clonato
-4. Cambiare la riga in pb_hooks/main.pb.js con il dominio che si desidera per il QR code:
+4. Cambiare la riga in `pb_hooks/main.pb.js` con il dominio che si desidera per il QR code:
    ```js
    const qrdata = encodeURIComponent("https://cambia_il_dominio/links?id=" + e.record.id);
    ```
@@ -67,13 +67,16 @@ Qui si trova qualche informazione riguardo la customizzazione dell'applicazione.
 
 Questa cartella contiene tutto il lato "front-office" della applicazione (le pagine che si trovano su `http://localhost:8090/`):
 * La pagina iniziale
-* La pagina che carica il documento
+* Gli asset come il CSS e la libreria per la visualizzazione dei PDF
 
-### pb_hooks/main.pb.js
+### pb_hooks
 
-Questo file al momento contiene:
+Questa cartella contiene il codice che gestisce il backend, e le viste che vengono generate in base al caso se il documento esiste oppure no.
+
+Il file `pb_hooks/main.pb.js` al momento contiene:
 * Un middleware che blocca certe rotte che devono essere accessibili solamente dall'interno
 * Un hook post-creazione di un "link" per la generazione del QR code
+* un handler per la rotta `/links` che prende i dati necessari dal DB e li passa alla vista corretta.
 
 _Nota: Nel nostro caso l'applicazione è stata messa in produzione dietro un reverse proxy. Se si vuole metterlo in produzione in un altro modo, il codice del middleware potrebbe non funzionare correttamente_
 

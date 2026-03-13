@@ -1,0 +1,49 @@
+{{define "title"}}Documento {{.nome}}{{end}}
+
+{{define "body"}}
+<div class="file-ok container">
+        <section class="banner">
+            <div>
+                <h1 class="file-nome">{{.nome}}</h1>
+                <h4>Scadenza: <span class="file-scadenza {{if .scadenza_scaduta}}text-red{{end}}">{{.scadenza_formatted}}</span></h4>
+            </div>
+            <div>
+                <a href="{{.documento_url}}" target="_blank" class="btn file-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-download">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                        <path d="M7 11l5 5l5 -5" />
+                        <path d="M12 4l0 12" />
+                    </svg>
+                    Scarica Documento
+                </a>
+            </div>
+        </section>
+        <div class="content">
+            {{if .documento_ispdf}}
+            <iframe class="file-preview" src="/assets/pdfjs/web/viewer.html?file={{.documento_url}}" width="100%"
+                height="100%;" frameborder="0"></iframe>
+            {{else}}
+            <div class="file-no-preview" style="flex-direction: column; align-items: center; text-align:center;">
+                <div style="max-width: 180px; width: 100%;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none"
+                        stroke="#6F7887" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-eye-question">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                        <path
+                            d="M14.071 17.764a8.989 8.989 0 0 1 -2.071 .236c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.346 0 6.173 1.727 8.482 5.182" />
+                        <path d="M19 22v.01" />
+                        <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" />
+                    </svg>
+                </div>
+                <h1>Anteprima non disponibile</h1>
+                <h3>Non è possibile mostrare un anteprima del file. Cliccare sul pulsante "Scarica documento" per
+                    scaricare il documento</h3>
+            </div>
+            {{end}}
+        </div>
+    </div>
+{{end}}
